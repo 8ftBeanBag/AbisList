@@ -1,7 +1,39 @@
 <template>
-  <HelloWorld />
+  <v-container>
+    <v-card>
+      <v-tabs
+        v-model="tab"
+        bg-color="primary"
+      >
+        <v-tab value="courses">Courses</v-tab>
+        <v-tab value="reviews">Reviews</v-tab>
+        <v-tab value="planner">Planner</v-tab>
+      </v-tabs>
+
+      <v-card-text>
+        <v-window v-model="tab">
+          <v-window-item value="courses">
+            <CoursesTable></CoursesTable>
+          </v-window-item>
+
+          <v-window-item value="reviews">
+            <ReviewsList></ReviewsList>
+          </v-window-item>
+
+          <v-window-item value="planner">
+            <PlannerApp></PlannerApp>
+          </v-window-item>
+        </v-window>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+import CoursesTable from "@/components/CoursesTable.vue"
+import ReviewsList from "@/components/ReviewsList.vue"
+import PlannerApp from "@/components/PlannerApp.vue"
+import { ref } from "vue";
+
+const tab = ref(null)
 </script>
