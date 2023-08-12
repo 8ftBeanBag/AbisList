@@ -63,7 +63,7 @@ onMounted(()=>{
 const formatOMSC = (response)=>{
     for(let res in response){
         const core = response[res].data.pageProps.course
-        courseData.value.push({
+        courseData.value[core.number] = {
             tags: core.tags,
             creditHours: core.creditHours,
             name: core.name,
@@ -74,7 +74,7 @@ const formatOMSC = (response)=>{
             workload: core.workload,
             source: omscentral,
             url: core.officialURL
-        })
+        }
     }
 }
 </script>
