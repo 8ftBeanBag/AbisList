@@ -18,7 +18,7 @@
       location="left"
       temporary
     >
-      <v-list density="compact" nav v-model:opened="drawer">
+      <v-list density="compact" nav v-model="drawer">
         <v-list-item prepend-icon="mdi-home" title="Home" href="/"/>
         <v-list-item prepend-icon="mdi-information" title="About" href="/about"/>
         <v-list-item prepend-icon="mdi-email" title="Contact Info" href="/contact"/>
