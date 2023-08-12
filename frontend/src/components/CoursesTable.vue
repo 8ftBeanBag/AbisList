@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="course in courseData">
+            <tr v-for="course in Object.values(courseData)">
                 <td class="pa-2"><CourseItem :course="course"></CourseItem></td>
                 <td>{{ Math.round(course.rating * 100)/100 }}</td>
                 <td>{{ Math.round(course.difficulty * 100)/100 }}</td>
@@ -22,6 +22,6 @@
 <script setup>
 import CourseItem from './CourseItem.vue';
 const props = defineProps({
-    courseData: Array,
+    courseData: Object,
 })
 </script>
