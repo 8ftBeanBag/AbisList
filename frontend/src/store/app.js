@@ -7,7 +7,8 @@ import axios from 'axios';
 export const useAppStore = defineStore('app', {
   state: () => ({
     centralData: {},
-    hubData: {}
+    centralReviews: [],
+    hubData: {},
   }),
   getters: {
     courseData(state){
@@ -37,6 +38,10 @@ export const useAppStore = defineStore('app', {
           cData[name] = {...hub, sources: [hub.source]}
       }
       return cData
+    },
+
+    reviews(state){
+      return state.centralReviews;
     }
   },
   actions: {
@@ -45,7 +50,10 @@ export const useAppStore = defineStore('app', {
           const urls = omscentralAPI.courses.map((course)=>`${omscentralAPI.site}${omscentralAPI.sub}${course}/${omscentralAPI.filename}`)
           const response = await axios.all(urls.map((url)=>axios.get(url)))
           for(let res in response){
-            const core = response[res].data.pageProps.course
+            const core = response[res].data.pageProps.course;
+            core.reviews.source = omscentral;
+            core.reviews.course = core.name;
+            this.centralReviews.concat(...core.reviews)
             this.centralData[core.name] = {
                 tags: core.tags,
                 creditHours: core.creditHours,

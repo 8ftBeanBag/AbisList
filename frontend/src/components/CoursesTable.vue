@@ -4,8 +4,8 @@
         <thead>
             <tr>
                 <th>Course <button @click="()=>sort('name')"><v-icon>mdi-swap-vertical</v-icon></button></th>
-                <th>Rating <button @click="()=>sort('rating')"><v-icon>mdi-swap-vertical</v-icon></button></th>
-                <th>Difficulty <button @click="()=>sort('difficulty')"><v-icon>mdi-swap-vertical</v-icon></button></th>
+                <th>Rating/5 <button @click="()=>sort('rating')"><v-icon>mdi-swap-vertical</v-icon></button></th>
+                <th>Difficulty/5 <button @click="()=>sort('difficulty')"><v-icon>mdi-swap-vertical</v-icon></button></th>
                 <th>Workload (hrs/wk) <button @click="()=>sort('workload')"><v-icon>mdi-swap-vertical</v-icon></button></th>
             </tr>
         </thead>
