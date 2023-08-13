@@ -1,6 +1,7 @@
 // Utilities
 import { defineStore } from 'pinia';
 import { omscentral, omscentralAPI } from '@/utils/omscentral';
+import { omsHubAPI } from '@/utils/omshub';
 import axios from 'axios';
 
 export const useAppStore = defineStore('app', {
@@ -14,7 +15,7 @@ export const useAppStore = defineStore('app', {
           const response = await axios.all(urls.map((url)=>axios.get(url)))
           for(let res in response){
             const core = response[res].data.pageProps.course
-            this.courseData[core.number] = {
+            this.courseData[core.name] = {
                 tags: core.tags,
                 creditHours: core.creditHours,
                 name: core.name,
@@ -28,6 +29,6 @@ export const useAppStore = defineStore('app', {
             }
         }
       }
-    }
+    },
   }
 });

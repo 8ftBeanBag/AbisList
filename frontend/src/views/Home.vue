@@ -40,6 +40,7 @@ const store = useAppStore();
 const tab = ref(null)
 
 onMounted(()=>{
-  store.fetchOMSCReviews();
+  store.fetchOMSCReviews().catch(()=>alert("Uh-oh, can't get data from OMSCentral ☹️"));
+  store.fetchOMSHub().catch(()=>alert("Uh-oh, can't get data from OMSHub ☹️"));
 });
 </script>
