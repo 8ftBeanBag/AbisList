@@ -12,8 +12,8 @@
             <v-icon>mdi-information</v-icon>
         </a>
     </v-chip>
-    <v-chip color="blue" class="me-2">
-        <a :href="course.source.site" target="_blank" rel="noreferrer noopener">{{ course.source.name }}</a>
+    <v-chip color="blue" class="me-2" v-for="source in course.sources">
+        <a :href="source.site" target="_blank" rel="noreferrer noopener">{{ source.name }}</a>
     </v-chip>
     <v-chip color="purple" class="me-2">
         <button  @click="$emit('reviews', course.name)">Reviews</button>
