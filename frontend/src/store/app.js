@@ -16,7 +16,6 @@ export const useAppStore = defineStore('app', {
       const averageKeys = ["rating", "difficulty", "workload"]
 
       for(const name of names){
-        console.log(name)
         const central = state.centralData[name]
         const hub = state.hubData[name]
 
@@ -31,7 +30,7 @@ export const useAppStore = defineStore('app', {
           // Get source(s)
           cData[name].sources = [central.source, hub.source]
         }
-        
+
         if(central && !hub)
           cData[name] = {...central, sources: [central.source]}
         if(hub && !central) 
@@ -51,7 +50,6 @@ export const useAppStore = defineStore('app', {
                 tags: core.tags,
                 creditHours: core.creditHours,
                 name: core.name,
-                reviews: core.reviews,
                 number: core.codes[0],
                 rating: core.rating,
                 difficulty: core.difficulty,

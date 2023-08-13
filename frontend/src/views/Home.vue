@@ -13,7 +13,7 @@
       <v-card-text>
         <v-window v-model="tab">
           <v-window-item value="courses">
-            <CoursesTable :courseData="store.courseData"></CoursesTable>
+            <CoursesTable :courseData="Object.values(store.courseData)"></CoursesTable>
           </v-window-item>
 
           <v-window-item value="reviews">
@@ -41,7 +41,6 @@ const tab = ref(null)
 
 onMounted(()=>{
   store.fetchOMSCReviews().catch(()=>alert("Uh-oh, can't get data from OMSCentral ☹️"));
-  store.fetchOMSHub()
-  //.catch(()=>alert("Uh-oh, can't get data from OMSHub ☹️"));
+  store.fetchOMSCReviews().catch(()=>alert("Uh-oh, can't get data from OMSHub ☹️"));
 });
 </script>

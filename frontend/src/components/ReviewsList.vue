@@ -1,3 +1,3 @@
 <template>
-    REviews
+    Coming soon! Maybe
 </template>
