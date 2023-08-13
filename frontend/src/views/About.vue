@@ -18,6 +18,7 @@
                 <p class="mb-5">
                     I did a combination of investigating the data structures of my data sources and some scraping.
                     The scraping is only done on request or when Abi feels like it in order to protect the data sources.
+                    The exception to this is OMSCentral which is breifly scraped for resources on startup.
                 </p>
                 <p class="text-h4">I own one of those data sources and I'm mad 😠</p>
                 <p class="mb-5">

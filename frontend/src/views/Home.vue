@@ -41,6 +41,8 @@ import { ref, onMounted, computed } from "vue";
 import { omsHubAPI, omshub } from "@/utils/omshub";
 import { omscentralAPI, omscentral } from "@/utils/omscentral";
 import axios from "axios";
+import { generateCentralCourses } from "@/utils/courses";
+import { plannerApi } from "@/utils/planner";
 
 const tab = ref(null)
 const loading = ref(false);
@@ -52,9 +54,12 @@ const reviewFilter = ref("");
 
 onMounted(async ()=>{
   loading.value = true;
-  await fetchOMSCReviews()
   await fetchOMSHub();
   await fetchPlanner();
+
+  // generate course names to use to retrieve data from OMSCentral
+  const courseNames = generateCentralCourses([...Object.keys(plannerData.value), ...Object.keys(hubData.value)])
+  await fetchOMSCentral(courseNames);
   loading.value = false;
 });
 
@@ -89,12 +94,11 @@ const courses = computed(()=>{
     
     // Add in planner data
     if(planner) {
-      // prioritize planner data name and number
-      cData[name].name = planner.name;
-      cData[name].number = planner.number;
+      // prioritize planner data name
+      cData[name].name = planner.name;  
       cData[name].seats = planner.seats;
       cData[name].specializations = planner.specializations;
-      cData[name].sources.push({name: "Planner", site: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRyHrRhH2V52bsYFEtm-8oJDaFOlyGYz6AKXm8WwsthN3fNP3KGkEx7O7D9ZHV3j2iKnzU2XHqoh4pQ/pubhtml"})
+      cData[name].sources.push({name: "Planner", site: plannerApi.site})
     }
   }
   return cData
@@ -104,24 +108,40 @@ const reviews = computed(()=>{
   return reviewFilter.value.trim() ? centralReviews.value.filter(r=>r.course === reviewFilter.value) : centralReviews.value
 });
 
-async function fetchOMSCReviews(){
-  const urls = omscentralAPI.courses.map((course)=>`${omscentralAPI.site}${omscentralAPI.sub}${course}/${omscentralAPI.filename}`)
-  const response = await axios.all(urls.map((url)=>axios.get(url)))
-  for(let res in response){
-    const core = response[res].data.pageProps.course;
-    centralReviews.value.push(...core.reviews.map(r=>({...r, course: core.name, source: omscentral})))
-    centralData.value[core.name] = {
-        tags: core.tags,
-        creditHours: core.creditHours,
-        name: core.name,
-        number: core.codes[0],
-        rating: core.rating,
-        difficulty: core.difficulty,
-        workload: core.workload,
-        source: omscentral,
-        url: core.officialURL
+async function fetchOMSCentral(names){
+  const urls = names.map((course)=>[`${omscentralAPI.site}${omscentralAPI.sub}${course}/${omscentralAPI.filename}`, course])
+    const proms = urls.map((url)=>axios.get(url[0]).then((response=>{return [response, url[1]]})).catch((err)=>{
+      if(err.response === undefined){
+        console.warn('Encountered CORS error (proabably)', err)
+      }
+      else if(err.response.status === 404){
+      console.warn(`Couldn't get data for ${err.response.request.responseURL}`)
+      }
+      else
+        console.error(err)
+    }));
+    let response = await axios.all(proms);
+
+    for(let res in response){
+      if(response[res] === undefined)
+        continue
+
+      const core = response[res][0].data.pageProps.course;
+      centralReviews.value.push(...core.reviews.map(r=>({...r, course: core.name, source: omscentral})))
+      centralData.value[core.name] = {
+          tags: core.tags,
+          creditHours: core.creditHours,
+          name: core.name,
+          number: core.codes[0],
+          rating: core.rating,
+          difficulty: core.difficulty,
+          workload: core.workload,
+          source: omscentral,
+          url: core.officialURL,
+          reviews: core.reviews,
+          centralUrl: response[res][1]
+      }
     }
-  }
 }
     
 async function fetchOMSHub(){

@@ -10,15 +10,24 @@
             <v-icon>mdi-information</v-icon>
         </a>
     </v-chip>
-    <v-chip color="blue" class="me-2" v-for="source in course.sources">
-        <a :href="source.site" target="_blank" rel="noreferrer noopener">{{ source.name }}</a>
+    <v-chip color="blue" class="me-2" v-if="course.centralUrl">
+        <a :href="encodeURI(`${omscentralAPI.site}/courses/${course.centralUrl}/reviews`)" target="_blank" rel="noreferrer noopener">OMSCentral</a>
     </v-chip>
-    <v-chip color="purple" class="me-2">
+    <v-chip color="blue" class="me-2" v-if="course.sources.map(s=>s.name).includes('OMSHub')">
+        <a :href="encodeURI(`${omsHubAPI.site}course/${course.number}`)" target="_blank" rel="noreferrer noopener">OMSHub</a>
+    </v-chip>
+    <v-chip color="blue" class="me-2" v-if="course.sources.map(s=>s.name).includes('Planner')">
+        <a :href="`${plannerApi.site}`" target="_blank" rel="noreferrer noopener">Planner</a>
+    </v-chip>
+    <v-chip color="purple" class="me-2" v-if="course.reviews && course.reviews.length > 0">
         <button @click="$emit('reviews', course.name)"><v-icon>mdi-file</v-icon>Reviews</button>
     </v-chip>
 </template>
 
 <script setup>
+import { omscentralAPI } from '@/utils/omscentral';
+import { omsHubAPI } from '@/utils/omshub';
+import {plannerApi} from "@/utils/planner"
 const props = defineProps({
     course: Object
 });
