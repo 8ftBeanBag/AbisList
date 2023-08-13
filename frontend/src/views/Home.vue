@@ -11,7 +11,7 @@
       >
         <v-tab value="courses">Courses</v-tab>
         <v-tab value="reviews">Reviews</v-tab>
-        <v-tab value="planner">Planner</v-tab>
+        <!-- <v-tab value="planner">Planner</v-tab> -->
       </v-tabs>
 
       <v-card-text v-if="!loading">
@@ -108,9 +108,7 @@ async function fetchOMSCReviews(){
   const response = await axios.all(urls.map((url)=>axios.get(url)))
   for(let res in response){
     const core = response[res].data.pageProps.course;
-    core.reviews.source = omscentral;
-    core.reviews.course = core.name;
-    centralReviews.value.concat(...core.reviews)
+    centralReviews.value.push(...core.reviews.map(r=>({...r, course: core.name, source: omscentral})))
     centralData.value[core.name] = {
         tags: core.tags,
         creditHours: core.creditHours,
