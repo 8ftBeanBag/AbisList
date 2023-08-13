@@ -4,8 +4,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
 import json as JSON
+
 filepath = "../OMSHub.csv"
 outpath = "../frontend/public/data/"
+
 def download_csv(download_path):
     url = "https://www.omshub.org/"
 

@@ -7,6 +7,7 @@
                 <th>Rating/5 <button @click="()=>sort('rating')"><v-icon>mdi-swap-vertical</v-icon></button></th>
                 <th>Difficulty/5 <button @click="()=>sort('difficulty')"><v-icon>mdi-swap-vertical</v-icon></button></th>
                 <th>Workload (hrs/wk) <button @click="()=>sort('workload')"><v-icon>mdi-swap-vertical</v-icon></button></th>
+                <th>Seats <button @click="()=>sort('seats')"><v-icon>mdi-swap-vertical</v-icon></button></th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
                 <td>{{ Math.round(course.rating * 100)/100 }}</td>
                 <td>{{ Math.round(course.difficulty * 100)/100 }}</td>
                 <td>{{ Math.round(course.workload * 100)/100 }}</td>
+                <td><div :class="parseFloat(course.seats) > 0 ? 'bg-green' : isNaN(course.seats) ? 'bg-yellow' : 'bg-red'" class="rounded-circle pa-3 w-100 text-center">{{ course.seats }}</div></td>
             </tr>
         </tbody>
     </v-table>
@@ -28,7 +30,7 @@ const props = defineProps({
     courseData: Object,
 })
 
-const courses = ref(Object.values(props.courseData))
+const courses = ref(props.courseData)
 const asc = ref({})
 const searchedText = ref("")
 const sortKey = ref('name')
@@ -39,13 +41,24 @@ function sort(key){
 }
 
 const searchedSorted = computed(()=>{
+    const isNumber = ["rating", "workload", "difficulty", "seats"].includes(sortKey.value);
     courses.value.sort((a, b)=>{
+        // Clean the data
+        let aKey = sortKey.value in a ? a[sortKey.value] : isNumber ? 0 : "";
+        let bKey = sortKey.value in b ? b[sortKey.value] : isNumber ? 0 : "";
+        
+        // If undefined sort to the bottom
+        if(aKey === undefined || (isNumber && isNaN(aKey)))
+            return -1;  
+        if(bKey === undefined || (isNumber && isNaN(bKey)))
+            return 1
+
         // Sort numerically
-        if(["rating", "workload", "difficulty"].includes(sortKey.value)){
-            return asc.value[sortKey.value] ? a[sortKey.value] - b[sortKey.value] : b[sortKey.value] - a[sortKey.value];
+        if(isNumber){
+            return asc.value[sortKey.value] ? aKey - bKey : bKey - aKey;
         }
         // Sort alphabetically
-        return asc.value[sortKey.value] ? a[sortKey.value].localeCompare(b[key]) : b[sortKey.value].localeCompare(a[sortKey.value]);
+        return asc.value[sortKey.value] ? aKey.localeCompare(bKey) : bKey.localeCompare(aKey);
     })
 
     if(!searchedText.value.trim()){
