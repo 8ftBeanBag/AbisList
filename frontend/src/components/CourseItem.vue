@@ -4,10 +4,8 @@
             <v-chip color="amber" class="ms-2">#{{ course.number }}</v-chip>
         </strong>
     </div>
-    <v-chip v-for="tag in course.tags" :key="course.name+tag" class="me-2">
-        <button @click="$emit('filter', tag)">{{ tag }}</button>
-    </v-chip>
-    <v-chip color="green" class="me-2">
+    <v-chip v-for="tag in course.tags" :key="course.name+tag" class="me-2">{{ tag }}</v-chip>
+    <v-chip color="green" class="me-2" v-if="course.url">
         <a :href="course.url" target="_blank" rel="noreferrer noopener">
             <v-icon>mdi-information</v-icon>
         </a>
@@ -16,7 +14,7 @@
         <a :href="source.site" target="_blank" rel="noreferrer noopener">{{ source.name }}</a>
     </v-chip>
     <v-chip color="purple" class="me-2">
-        <button  @click="$emit('reviews', course.name)">Reviews</button>
+        <button @click="$emit('reviews', course.name)"><v-icon>mdi-file</v-icon>Reviews</button>
     </v-chip>
 </template>
 

@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr v-for="course in searchedSorted">
-                <td class="pa-2"><CourseItem :course="course"></CourseItem></td>
+                <td class="pa-2"><CourseItem :course="course" @reviews="(val)=>$emit('filterReviews', val)"></CourseItem></td>
                 <td>{{ Math.round(course.rating * 100)/100 }}</td>
                 <td>{{ Math.round(course.difficulty * 100)/100 }}</td>
                 <td>{{ Math.round(course.workload * 100)/100 }}</td>
@@ -26,9 +26,11 @@
 import { ref, watch } from 'vue';
 import CourseItem from './CourseItem.vue';
 import { computed } from 'vue';
+
 const props = defineProps({
     courseData: Object,
 })
+defineEmits(['filterReviews']);
 
 const courses = ref(props.courseData)
 const asc = ref({})

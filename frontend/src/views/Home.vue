@@ -17,7 +17,7 @@
       <v-card-text v-if="!loading">
         <v-window v-model="tab">
           <v-window-item value="courses">
-            <CoursesTable :courseData="Object.values(courses)"></CoursesTable>
+            <CoursesTable :courseData="Object.values(courses)" @filter-reviews="(val)=>{reviewFilter=val; tab='reviews'}"></CoursesTable>
           </v-window-item>
 
           <v-window-item value="reviews">
@@ -48,6 +48,7 @@ const centralData = ref({});
 const centralReviews = ref([]);
 const hubData = ref({});
 const plannerData = ref({});
+const reviewFilter = ref("");
 
 onMounted(async ()=>{
   loading.value = true;
@@ -88,9 +89,9 @@ const courses = computed(()=>{
     
     // Add in planner data
     if(planner) {
-      // prioritize planner data name
-      console.log(planner)
+      // prioritize planner data name and number
       cData[name].name = planner.name;
+      cData[name].number = planner.number;
       cData[name].seats = planner.seats;
       cData[name].specializations = planner.specializations;
       cData[name].sources.push({name: "Planner", site: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRyHrRhH2V52bsYFEtm-8oJDaFOlyGYz6AKXm8WwsthN3fNP3KGkEx7O7D9ZHV3j2iKnzU2XHqoh4pQ/pubhtml"})
@@ -100,7 +101,7 @@ const courses = computed(()=>{
 })
 
 const reviews = computed(()=>{
-  return centralReviews.value;
+  return reviewFilter.value.trim() ? centralReviews.value.filter(r=>r.course === reviewFilter.value) : centralReviews.value
 });
 
 async function fetchOMSCReviews(){
