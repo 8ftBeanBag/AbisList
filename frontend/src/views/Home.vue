@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <div class="d-flex justify-center" v-if="loading">
+      <div class="d-flex justify-center ma-5" v-if="loading">
         <v-progress-circular indeterminate></v-progress-circular>
       </div>
       <v-tabs
@@ -17,7 +17,9 @@
       <v-card-text v-if="!loading">
         <v-window v-model="tab">
           <v-window-item value="courses">
-            <CoursesTable :courseData="Object.values(courses)" @filter-reviews="(val)=>{reviewFilter=val; tab='reviews'}"></CoursesTable>
+            <CoursesTable 
+              :courseData="Object.values(courses)" 
+              @filter-reviews="(val)=>{reviewFilter=val; tab='reviews'}"></CoursesTable>
           </v-window-item>
 
           <v-window-item value="reviews">
@@ -95,12 +97,15 @@ const courses = computed(()=>{
     // Add in planner data
     if(planner) {
       // prioritize planner data name
+      if(!cData[name].number)
+        cData[name].number = planner.number;
       cData[name].name = planner.name;  
       cData[name].seats = planner.seats;
       cData[name].specializations = planner.specializations;
       cData[name].sources.push({name: "Planner", site: plannerApi.site})
     }
   }
+
   return cData
 })
 

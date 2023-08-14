@@ -3,7 +3,7 @@
     <v-app-bar>
       <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <a href="/" class="text-decoration-none text-white">Abi's</a>
+        <a href="/" class="text-decoration-none text-purple text-h4">Abi's List</a>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn variant="text" href="https://github.com/8ftBeanBag/AbisList" target="_blank" rel="noreferrer noopener">
