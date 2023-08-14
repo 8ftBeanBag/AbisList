@@ -1,10 +1,2 @@
 # AbisList
-This is Abi's List of Course at OMSCS Georgia Tech.
-
-
-# Running the frontend
-```bash
-npm install
-npm run dev
-```
-That's it!
+This is Abi's List of Course at OMSCS Georgia Tech. It includes data from 4 sources: OMSCentral, OMSHub, gatech.edu and OMSC Rocks planner.
