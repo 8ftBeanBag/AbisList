@@ -54,7 +54,16 @@
                 <td>{{ Math.round(course.rating * 100)/100 }}</td>
                 <td>{{ Math.round(course.difficulty * 100)/100 }}</td>
                 <td>{{ Math.round(course.workload * 100)/100 }}</td>
-                <td><div :class="!course.seats ? '' : parseFloat(course.seats) > 0 ? 'bg-green' : isNaN(course.seats) ? 'bg-yellow' : 'bg-red'" class="rounded-circle pa-3 w-100 text-center">{{ course.seats }}</div></td>
+                <td>
+                    <a 
+                        :href="plannerApi.site" 
+                        :class="!course.seats ? '' : parseFloat(course.seats) > 0 ? 'bg-green' : isNaN(course.seats) ? 'bg-yellow' : 'bg-red'" 
+                        class="rounded-circle pa-3 w-100 text-center d-inline-block"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        {{ course.seats }}
+                    </a>
+                </td>
             </tr>
         </tbody>
     </v-table>
@@ -64,6 +73,7 @@
 import { ref, watch } from 'vue';
 import CourseItem from './CourseItem.vue';
 import { computed } from 'vue';
+import { plannerApi } from '@/utils/planner';
 
 const props = defineProps({
     courseData: Object,

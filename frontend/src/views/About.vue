@@ -10,7 +10,8 @@
         </div>  
         <v-btn href="https://www.omscentral.com/" color="primary" class="me-2" target="_blank" rel="noopener noreferrer">OMSCentral</v-btn>
         <v-btn href="https://www.omshub.org/" color="primary" class="me-2" target="_blank" rel="noopener noreferrer">OMSHub</v-btn>
-        <v-btn href="https://omscs.gatech.edu/" color="primary" target="_blank" rel="noopener noreferrer">OMSCS.gatech.edu</v-btn>
+        <v-btn href="https://omscs.gatech.edu/" color="primary" class="me-2" target="_blank" rel="noopener noreferrer">OMSCS.gatech.edu</v-btn>
+        <v-btn :href="plannerApi.site" color="primary" class="me-2" target="_blank" rel="noopener noreferrer">OMSCS.rocks</v-btn>
     
         <div class="d-flex justify-center">
             <div class="w-50 text-left mt-5 pa-5">
@@ -37,5 +38,7 @@
 </template>
 
 <script setup>
+import { plannerApi } from '@/utils/planner';
+
 </script>
   
