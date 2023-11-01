@@ -24,11 +24,11 @@
                 <p class="text-h4">I own one of those data sources and I'm mad 😠</p>
                 <p class="mb-5">
                     I'm super sorry about that. Please contact me immediately and we'll work things out
-                    until you're not mad anymore. <a href="mailto:hello@abigailhendrick.com">hello@abigailhendrick.com</a>
+                    until you're not mad anymore. <a href="mailto:abigail@abigailhendrick.com">abigail@abigailhendrick.com</a>
                 </p>
                 <p class="text-h4">I love what you're doing and I'd like to support!</p>
                 <p class="mb-5">
-                    Awesome! Contact me at <a href="mailto:hello@abigailhendrick.com">hello@abigailhendrick.com</a> or make 
+                    Awesome! Contact me at <a href="mailto:abigail@abigailhendrick.com">abigail@abigailhendrick.com</a> or make 
                     a pull request at my <a  href="https://github.com/8ftBeanBag/AbisList" target="_blank" rel="noreferrer noopener"><v-icon>mdi-github</v-icon>GitHub.</a>
                     I'll respond quickly.
                 </p>
